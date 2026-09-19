@@ -103,4 +103,21 @@ async function getUser(req,res){
 
 }
 
-module.exports = {registerUser,loginUser,getUser}
+async function updateProfile(req,res){
+  const userId = req.user.id
+
+  const {username,address} = req.body
+
+  const updateUser = await userModel.findByIdAndUpdate(userId,{
+    username,
+    address
+  },{new:true});
+
+  res.status(200).json({
+    message:"User Updated Sucsessfully",
+    user:updateUser
+  });
+
+};
+
+module.exports = {registerUser,loginUser,getUser,updateProfile}
