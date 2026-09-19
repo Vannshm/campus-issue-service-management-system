@@ -83,4 +83,24 @@ async function loginUser(req,res){
 
 }
 
-module.exports = {registerUser,loginUser}
+async function getUser(req,res){
+  const {username} = req.body
+
+  const user = await userModel.find({
+    username
+  })
+
+  if(!user){
+    return res.status(401).json({
+      message:'the user not found'
+    })
+  }
+
+  res.status(200).json({
+    message:'user found sucsessfully',
+    user:user
+  })
+
+}
+
+module.exports = {registerUser,loginUser,getUser}
