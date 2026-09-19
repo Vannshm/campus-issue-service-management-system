@@ -44,5 +44,43 @@ async function registerUser(req,res){
 
 }
 
+async function loginUser(req,res){
+  const {email,phone,password} = req.body
 
-module.exports = {registerUser}
+  const user = await userModel.findOne({
+    $or:[
+      {email},
+      {phone}
+    ]
+  })
+
+  if(!user){
+    return res.status(401).json({
+      message:"Invalid Cradintials"
+    })
+  }
+
+  const isPassValid = await bcpt.compare(password,user.password)
+
+  if(!isPassValid){
+    return res.status(401).json({
+      message:"Invalid Password"
+    })
+  }
+
+  const token = jwt.sign({
+    id:user._id,
+    role:user.role
+  },process.env.JWT_SEC_KEY)
+
+  res.cookie('token',token)
+
+  res.status(200).json({
+    message:"User login sucessfull",
+    user:user,
+    token
+  })
+
+}
+
+module.exports = {registerUser,loginUser}
