@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema({
     unique:true
   },
   email:{
-    type:email,
+    type:String,
     required:true,
     unique:true
   },
@@ -22,6 +22,11 @@ const userSchema = new mongoose.Schema({
   },
   address:{
     type:String
+  },
+  role:{
+    type:String,
+    enum:['student','faculty','admin'],
+    default:'student'
   }
 })
 
