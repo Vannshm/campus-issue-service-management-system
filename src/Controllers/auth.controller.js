@@ -183,4 +183,23 @@ async function viewMyIssue(req,res){
     
 }
 
-module.exports = {registerUser,loginUser,logoutUser,getUser,updateProfile,createIssue,viewMyIssue}
+async function viewOneIssue(req,res){
+  const issue = await issueModel.findOne({
+    _id:req.params.id,
+    user:req.user.id
+  })
+
+  if(!issue){
+    return res.status(404).json({
+        message:'No issues found'
+      })
+  }
+
+  res.status(200).json({
+    message:'issue found sucessfully',
+    issue
+  })
+
+}
+
+module.exports = {registerUser,loginUser,logoutUser,getUser,updateProfile,createIssue,viewMyIssue,viewOneIssue}
