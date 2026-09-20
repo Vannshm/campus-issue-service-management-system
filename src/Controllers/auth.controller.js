@@ -212,7 +212,7 @@ async function updateIssue(req,res){
   {
     $set:req.body
   },
-{new:true})
+{returnDocument:'after'})
 
 if(!updatedIssue){
   return res.status(401).json({
