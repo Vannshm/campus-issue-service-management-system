@@ -15,5 +15,6 @@ route.put('/update-profile',authMiddleware.authUpdateProfile,authController.upda
 route.post('/create-issue',upload.single('image'),issueMiddleware.McreateIssue,authController.createIssue)
 route.get('/viewMy-issues',issueMiddleware.McreateIssue,authController.viewMyIssue)
 route.get('/view-issue/:id',issueMiddleware.McreateIssue,authController.viewMyIssue)
+route.put('/update-issue/:id',issueMiddleware.McreateIssue,authController.updateIssue)
 
 module.exports=route

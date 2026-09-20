@@ -202,4 +202,38 @@ async function viewOneIssue(req,res){
 
 }
 
-module.exports = {registerUser,loginUser,logoutUser,getUser,updateProfile,createIssue,viewMyIssue,viewOneIssue}
+async function updateIssue(req,res){
+
+  const updatedIssue = await issueModel.findOneAndUpdate(
+    {
+      _id:req.params.id,
+      user:req.user.id
+    },
+  {
+    $set:req.body
+  },
+{new:true})
+
+if(!updatedIssue){
+  return res.status(401).json({
+    message:'issue not found!'
+  })
+}
+
+  res.status(200).json({
+    message:'issue updated sucessfully',
+    updatedIssue
+  })
+}
+
+module.exports = {
+  registerUser,
+  loginUser,
+  logoutUser,
+  getUser,
+  updateProfile,
+  createIssue,
+  viewMyIssue,
+  viewOneIssue,
+  updateIssue
+}
