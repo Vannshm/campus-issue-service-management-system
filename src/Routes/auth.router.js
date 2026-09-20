@@ -14,7 +14,9 @@ route.post('/get-profile',authController.getUser)
 route.put('/update-profile',authMiddleware.authUpdateProfile,authController.updateProfile)
 route.post('/create-issue',upload.single('image'),issueMiddleware.McreateIssue,authController.createIssue)
 route.get('/viewMy-issues',issueMiddleware.McreateIssue,authController.viewMyIssue)
-route.get('/view-issue/:id',issueMiddleware.McreateIssue,authController.viewMyIssue)
+route.get('/view-issue/:id',issueMiddleware.McreateIssue,authController.viewOneIssue)
 route.put('/update-issue/:id',issueMiddleware.McreateIssue,authController.updateIssue)
+route.delete('/delete-issue/:id',issueMiddleware.McreateIssue,authController.deleteIssue)
+route.post('/comment-issue/:id',issueMiddleware.McreateIssue,authController.commentIssue)
 
 module.exports=route

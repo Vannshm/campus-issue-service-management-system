@@ -1,6 +1,7 @@
 const userModel = require('../Models/user.model')
 const issueModel = require('../Models/issue.model')
 const {uploadFile} = require('../Services/storage.service')
+const commentModel = require('../Models/comment.model')
 const jwt = require('jsonwebtoken')
 const bcpt = require('bcrypt')
 
@@ -226,6 +227,41 @@ if(!updatedIssue){
   })
 }
 
+async function deleteIssue(req,res){
+  const deleteIssue = await issueModel.findOneAndDelete(
+    {
+      _id:req.params.id,
+      user:req.user.id
+    }
+  )
+
+  if(!deleteIssue){
+    return res.status(404).json({
+      message:'issue not found!'
+    })
+  }
+
+  res.status(200).json({
+    message:'issue deleted sucessfully'
+  })
+}
+
+async function commentIssue(req,res){
+  const {comment} = req.body
+
+  const userComment = await commentModel.create({
+    about:req.params.id,
+    user:req.user.id,
+    comment
+  })
+
+  res.status(200).json({
+    message:'you comment added sucessfully',
+    userComment
+  })
+
+}
+
 module.exports = {
   registerUser,
   loginUser,
@@ -235,5 +271,7 @@ module.exports = {
   createIssue,
   viewMyIssue,
   viewOneIssue,
-  updateIssue
+  updateIssue,
+  deleteIssue,
+  commentIssue
 }

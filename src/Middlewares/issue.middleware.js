@@ -22,7 +22,7 @@ async function McreateIssue(req,res,next){
     next()
 
   }catch(err){
-    return res.status(401).josn({
+    return res.status(401).json({
       message:"Something Went Wrong"
     })
   }
