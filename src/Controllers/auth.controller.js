@@ -1,4 +1,6 @@
 const userModel = require('../Models/user.model')
+const issueModel = require('../Models/issue.model')
+const {uploadFile} = require('../Services/storage.service')
 const jwt = require('jsonwebtoken')
 const bcpt = require('bcrypt')
 
@@ -120,4 +122,42 @@ async function updateProfile(req,res){
 
 };
 
-module.exports = {registerUser,loginUser,getUser,updateProfile}
+async function createIssue(req,res){
+  try{
+
+    const {about='other',title,description,priority,status,assingedTo} = req.body
+    const file = req.file
+
+  let url
+
+  if(file){
+    const result = await uploadFile(file.buffer.toString('base64'))
+    url = result.url
+  }
+
+
+  const issue = await issueModel.create({
+    about,
+    url,
+    title,
+    description,
+    priority,
+    status,
+    user:req.user.id,
+    assingedTo
+  })
+
+  res.status(200).json({
+    message:'Issue uploded sucessfully',
+    issue
+  })
+
+  }catch(err){
+    console.log(err)
+    res.status(500).json({
+      message:"something went wrong"
+    })
+  }
+}
+
+module.exports = {registerUser,loginUser,getUser,updateProfile,createIssue}
