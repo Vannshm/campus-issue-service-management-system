@@ -85,6 +85,13 @@ async function loginUser(req,res){
 
 }
 
+async function logoutUser(req,res){
+  res.clearCookie('token')
+  res.status(200).json({
+    message:'user loged out sucessfully'
+  })
+}
+
 async function getUser(req,res){
   const {username} = req.body
 
@@ -176,4 +183,4 @@ async function viewMyIssue(req,res){
     
 }
 
-module.exports = {registerUser,loginUser,getUser,updateProfile,createIssue,viewMyIssue}
+module.exports = {registerUser,loginUser,logoutUser,getUser,updateProfile,createIssue,viewMyIssue}
