@@ -262,6 +262,26 @@ async function commentIssue(req,res){
 
 }
 
+async function viewAssignedIssues(req,res){
+  const userId = req.user.id
+
+  const assingedIssue = await issueModel.find({
+    assingedTo:userId
+  })
+
+  if(assingedIssue.length === 0){
+    return res.status(404).json({
+      message:'no issue assinged to you'
+    })
+  }
+
+  res.status(200).json({
+    message:'assinged issue feteched sucessfully',
+    assingedIssue
+  })
+
+}
+
 module.exports = {
   registerUser,
   loginUser,
@@ -273,5 +293,6 @@ module.exports = {
   viewOneIssue,
   updateIssue,
   deleteIssue,
-  commentIssue
+  commentIssue,
+  viewAssignedIssues
 }
