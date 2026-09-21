@@ -205,6 +205,12 @@ async function viewOneIssue(req,res){
 
 async function updateIssue(req,res){
 
+  if(req.user.role !== 'faculty' && req.user.role !== 'admin'){
+    return res.status(401).json({
+      message:'you cant update the status'
+    })
+  }
+
   const updatedIssue = await issueModel.findOneAndUpdate(
     {
       _id:req.params.id,
@@ -282,6 +288,41 @@ async function viewAssignedIssues(req,res){
 
 }
 
+async function updateIsuueStatus(req,res){
+try{
+  const issueId = req.params.id
+  const {status} = req.body
+
+  if(req.user.role !=='faculty' && req.user.role !=='admin'){
+    return res.status(401).json({
+      message:'you cant update the status'
+    })
+  }
+
+  const issue = await issueModel.findByIdAndUpdate(issueId,
+    {status:status},
+    {returnDocument:'after'}
+  )
+
+  if(!issue){
+    return res.status(404).json({
+      message:'issue not found'
+    })
+  }
+
+  res.status(200).json({
+    message:'issue status updated sucessfully',
+    issue
+  })
+}catch(err){
+  console.log(err)
+  res.status(400).json({
+    message:'something wemt wrong'
+  })
+}
+
+}
+
 module.exports = {
   registerUser,
   loginUser,
@@ -294,5 +335,6 @@ module.exports = {
   updateIssue,
   deleteIssue,
   commentIssue,
-  viewAssignedIssues
+  viewAssignedIssues,
+  updateIsuueStatus
 }

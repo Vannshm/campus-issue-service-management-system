@@ -19,5 +19,6 @@ route.put('/update-issue/:id',issueMiddleware.McreateIssue,authController.update
 route.delete('/delete-issue/:id',issueMiddleware.McreateIssue,authController.deleteIssue)
 route.post('/comment-issue/:id',issueMiddleware.McreateIssue,authController.commentIssue)
 route.get('/assigned-issues',issueMiddleware.McreateIssue,authController.viewAssignedIssues)
+route.put('/updateStatus-issues/:id',issueMiddleware.McreateIssue,authController.updateIsuueStatus)
 
 module.exports=route
