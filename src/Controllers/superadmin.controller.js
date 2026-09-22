@@ -135,10 +135,66 @@ async function blockUser(req,res){
 
 }
 
+async function deleteUser(req,res){
+  
+  try{
+
+    const user = req.params.id
+    const deleteUser = await userModel.findByIdAndDelete(user)
+
+      if(!deleteUser){
+        return res.status(400).json({
+      message:'not a valid user'
+      })
+      }
+
+     return res.status(200).json({
+        message:'user deleted sucessfully!',
+        deleteUser
+      })
+
+  }catch(err){
+    console.log(err)
+    return res.status(500).json({
+      message:'something went wrong!'
+    })
+  }
+
+}
+
+async function viewIssueByPrority(req,res){
+
+  try{
+
+      const priority = req.params.priority
+      const priorityIssue = await issueModel.find({priority:priority})
+      if(priorityIssue.length === 0){
+        return res.status(404).json({
+          message:'no issue found'
+        })
+      }
+
+      return res.status(200).json({
+        message:'issue fetched sucessfully',
+        priorityIssue
+      })
+
+  }catch(err){
+    console.log(err)
+    return res.status(500).json({
+      message:'something went wrong'
+    })
+  }
+  
+}
+
+
 module.exports = {
   changeUserRole,
   viewAllIssues,
   viewAllUsers,
   viewAllFaculty,
-  blockUser
+  blockUser,
+  deleteUser,
+  viewIssueByPrority
 }

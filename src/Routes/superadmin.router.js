@@ -8,5 +8,7 @@ route.get('/viewAllIssues',superadminMiddleware.MsuperadminProfile,superadminCon
 route.get('/viewAllUsers',superadminMiddleware.MsuperadminProfile,superadminController.viewAllUsers)
 route.get('/viewAllFaculty',superadminMiddleware.MsuperadminProfile,superadminController.viewAllFaculty)
 route.put('/blockUser/:id',superadminMiddleware.MsuperadminProfile,superadminController.blockUser)
+route.delete('/deleteUser/:id',superadminMiddleware.MsuperadminProfile,superadminController.deleteUser)
+route.get('/priorityIssue/:priority',superadminMiddleware.MsuperadminProfile,superadminController.viewIssueByPrority)
 
 module.exports = route
