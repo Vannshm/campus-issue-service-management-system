@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken')
+const userModel = require('../Models/user.model')
 
 async function authUpdateProfile(req,res,next){
   const token = req.cookies.token
@@ -11,9 +12,12 @@ async function authUpdateProfile(req,res,next){
   try{
 
     const decoded = jwt.verify(token,process.env.JWT_SEC_KEY)
-  if(!decoded){
-    return res.status(200).json({
-      message:"something went wrong"
+
+  const user = await userModel.findById(decoded.id)
+
+  if(user.isBlocked){
+    return res.status(400).json({
+      message:'Your account has been blocked'
     })
   }
 

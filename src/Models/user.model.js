@@ -27,6 +27,10 @@ const userSchema = new mongoose.Schema({
     type:String,
     enum:['student','faculty','admin','superadmin'],
     default:'student'
+  },
+  isBlocked:{
+    type:Boolean,
+    default:false
   }
 })
 

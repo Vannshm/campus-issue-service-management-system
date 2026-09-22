@@ -55,7 +55,59 @@ async function changeUserRole(req,res){
 
 }
 
+async function viewAllUsers(req,res){
+  
+  try{
+
+    const users = await userModel.find()
+    if(users.length === 0){
+      return res.status(400).json({
+        message:'no user found!'
+      })
+    }
+
+    res.status(200).json({
+      message:'users fetched sucessfully',
+      users
+    })
+
+  }catch(err){
+    consol.log(err)
+    return res.status(401).json({
+      message:'something went wrong!'
+    })
+  }
+
+}
+
+async function viewAllFaculty(req,res){
+  
+  try{
+
+    const users = await userModel.find({role:'faculty'})
+    if(users.length === 0){
+      return res.status(404).json({
+        message:'no user found!'
+      })
+    }
+
+    res.status(200).json({
+      message:'users fetched sucessfully',
+      users
+    })
+
+  }catch(err){
+    console.log(err)
+    return res.status(500).json({
+      message:'something went wrong!'
+    })
+  }
+
+}
+
 module.exports = {
   changeUserRole,
-  viewAllIssues
+  viewAllIssues,
+  viewAllUsers,
+  viewAllFaculty
 }

@@ -5,5 +5,7 @@ const superadminController = require('../Controllers/superadmin.controller')
 
 route.put('/update-role/:id',superadminMiddleware.MsuperadminProfile,superadminController.changeUserRole)
 route.get('/viewAllIssues',superadminMiddleware.MsuperadminProfile,superadminController.viewAllIssues)
+route.get('/viewAllUsers',superadminMiddleware.MsuperadminProfile,superadminController.viewAllUsers)
+route.get('/viewAllFaculty',superadminMiddleware.MsuperadminProfile,superadminController.viewAllFaculty)
 
 module.exports = route
