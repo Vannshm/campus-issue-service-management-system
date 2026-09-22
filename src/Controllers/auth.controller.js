@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken')
 const bcpt = require('bcrypt')
 
 async function registerUser(req,res){
-  const {username,phone,email,password,address,role='student'} = req.body;
+  const {username,phone,email,password,address} = req.body;
 
   const isuserExist = await userModel.findOne({
     $or:[
@@ -28,8 +28,7 @@ async function registerUser(req,res){
     phone,
     email,
     password:hash,
-    address,
-    role
+    address
   })
 
   const token = jwt.sign({
