@@ -1,0 +1,9 @@
+const express = require('express')
+const route = express.Router()
+const superadminMiddleware = require('../Middlewares/speradmin.middleware')
+const superadminController = require('../Controllers/superadmin.controller')
+
+route.put('/update-role/:id',superadminMiddleware.MsuperadminProfile,superadminController.changeUserRole)
+route.get('/viewAllIssues',superadminMiddleware.MsuperadminProfile,superadminController.viewAllIssues)
+
+module.exports = route
