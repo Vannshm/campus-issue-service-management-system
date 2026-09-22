@@ -105,9 +105,40 @@ async function viewAllFaculty(req,res){
 
 }
 
+async function blockUser(req,res){
+  
+  try{
+
+    const user = req.params.id
+    const block = await userModel.findByIdAndUpdate(user,
+      {
+        isBlocked:true
+      },{new:true})
+
+      if(!block){
+        return res.status(400).json({
+      message:'not a valid user'
+      })
+      }
+
+     return res.status(200).json({
+        message:'user blocked sucessfully!',
+        block
+      })
+
+  }catch(err){
+    console.log(err)
+    return res.status(500).json({
+      message:'something went wrong!'
+    })
+  }
+
+}
+
 module.exports = {
   changeUserRole,
   viewAllIssues,
   viewAllUsers,
-  viewAllFaculty
+  viewAllFaculty,
+  blockUser
 }

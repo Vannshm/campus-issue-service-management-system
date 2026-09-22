@@ -7,5 +7,6 @@ route.put('/update-role/:id',superadminMiddleware.MsuperadminProfile,superadminC
 route.get('/viewAllIssues',superadminMiddleware.MsuperadminProfile,superadminController.viewAllIssues)
 route.get('/viewAllUsers',superadminMiddleware.MsuperadminProfile,superadminController.viewAllUsers)
 route.get('/viewAllFaculty',superadminMiddleware.MsuperadminProfile,superadminController.viewAllFaculty)
+route.put('/blockUser/:id',superadminMiddleware.MsuperadminProfile,superadminController.blockUser)
 
 module.exports = route
