@@ -5,6 +5,8 @@ const superadminController = require('../Controllers/superadmin.controller')
 
 route.put('/update-role/:id',superadminMiddleware.MsuperadminProfile,superadminController.changeUserRole)
 route.get('/viewAllIssues',superadminMiddleware.MsuperadminProfile,superadminController.viewAllIssues)
+route.get('/viewIssuesNotAssigned',superadminMiddleware.MsuperadminProfile,superadminController.viewIssuesNotAssinged)
+route.put('/assignedIssue',superadminMiddleware.MsuperadminProfile,superadminController.assignedIssue)
 route.get('/viewAllUsers',superadminMiddleware.MsuperadminProfile,superadminController.viewAllUsers)
 route.get('/viewAllFaculty',superadminMiddleware.MsuperadminProfile,superadminController.viewAllFaculty)
 route.put('/blockUser/:id',superadminMiddleware.MsuperadminProfile,superadminController.blockUser)

@@ -18,6 +18,41 @@ async function viewAllIssues(rerq,res){
 
 }
 
+async function viewIssuesNotAssinged(req,res){
+
+const allIssues = await issueModel.find({assingedTo:null})
+
+  if(allIssues.length === 0){
+    return res.status(404).json({
+      message:'no issue found'
+    })
+  }
+
+  res.status(200).json({
+    message:'issues fetched sucessfully',
+    allIssues
+  })
+
+}
+
+async function assignedIssue(req,res){
+  const issueId = req.params.id
+  const {userId} = req.body
+  const assignIssue = await issueModel.findByIdAndUpdate(issueId,
+    {assingedTo:userId},
+    {new:true}
+  )
+  if(!assignIssue){
+    return res.status(401).json({
+      message:'something went wrong'
+    })
+  }
+  return res.status(200).json({
+    message:'issue assinged sucessfully',
+    assignIssue
+  })
+}
+
 async function changeUserRole(req,res){
   
   try{
@@ -244,6 +279,8 @@ try{
 module.exports = {
   changeUserRole,
   viewAllIssues,
+  viewIssuesNotAssinged,
+  assignedIssue,
   viewAllUsers,
   viewAllFaculty,
   blockUser,
