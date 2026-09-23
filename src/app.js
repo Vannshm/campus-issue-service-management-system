@@ -11,7 +11,7 @@ app.use(cookieParser())
 
 app.use('/api/auth',authRoute)
 app.use('/api/faculty',facultyRoute)
-app.user('/api/admin',adminRoute)
+app.use('/api/admin',adminRoute)
 app.use('/api/superadmin',superadminRoute)
 
 module.exports=app

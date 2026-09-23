@@ -26,6 +26,5 @@ async function adminProfile(req,res){
 }
 
 module.exports = {
-  adminProfile,
-  viewAllUsers
+  adminProfile
 }

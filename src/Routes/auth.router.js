@@ -1,5 +1,6 @@
 const express = require('express')
 const route = express.Router()
+const validation = require('../Middlewares/validationRegister.middleware')
 const authController = require('../Controllers/auth.controller')
 const authMiddleware = require('../Middlewares/auth.middleware')
 const issueMiddleware = require('../Middlewares/issue.middleware')
@@ -7,7 +8,7 @@ const multer = require('multer')
 
 const upload = multer({storage:multer.memoryStorage()})
 
-route.post('/register',authController.registerUser)
+route.post('/register',validation.registerValidationRule,authController.registerUser)
 route.post('/login',authController.loginUser)
 route.post('/logout',authController.logoutUser)
 route.get('/get-profile',issueMiddleware.McreateIssue,authController.getUser)
