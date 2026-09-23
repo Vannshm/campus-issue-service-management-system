@@ -10,5 +10,6 @@ route.get('/viewAllFaculty',superadminMiddleware.MsuperadminProfile,superadminCo
 route.put('/blockUser/:id',superadminMiddleware.MsuperadminProfile,superadminController.blockUser)
 route.delete('/deleteUser/:id',superadminMiddleware.MsuperadminProfile,superadminController.deleteUser)
 route.get('/priorityIssue/:priority',superadminMiddleware.MsuperadminProfile,superadminController.viewIssueByPrority)
+route.get('/statistics',superadminMiddleware.MsuperadminProfile,superadminController.systemStatistics)
 
 module.exports = route

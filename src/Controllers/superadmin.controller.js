@@ -188,6 +188,58 @@ async function viewIssueByPrority(req,res){
   
 }
 
+async function systemStatistics(req,res){
+  
+try{
+
+  const totalUser = await userModel.countDocuments()
+
+  const totalStudents = await userModel.countDocuments({role:'student'})
+
+  const totalFaculty = await userModel.countDocuments({role:'faculty'})
+
+  const totalAdmins = await userModel.countDocuments({role:'admin'})
+
+  const blockedUser = await userModel.countDocuments({isBlocked:true})
+
+  const totalIssues = await issueModel.countDocuments()
+
+  const totalOpenIssues = await issueModel.countDocuments({status:'open'})
+
+  const totalInProcessIssues = await issueModel.countDocuments({status:'in-progress'})
+
+  const totalResolvedIssues = await issueModel.countDocuments({status:'resolved'})
+
+  const totalClosedIssues = await issueModel.countDocuments({status:'closed'})
+
+  return res.status(200).json({
+    message:'System statistics fetched successfully',
+    users:{
+      total:totalUser,
+      Students:totalStudents,
+      faculty:totalFaculty,
+      admin:totalAdmins,
+      blocked:blockedUser
+    },
+    issues:{
+      total:totalIssues,
+      openIssues:totalOpenIssues,
+      processIssues:totalInProcessIssues,
+      resolvedIssues:totalResolvedIssues,
+      closedIssues:totalClosedIssues
+    }
+  })
+
+}catch(err){
+  console.log(err)
+  return res.status(500).json({
+    message:'something went wrong'
+  })
+}
+
+
+}
+
 
 module.exports = {
   changeUserRole,
@@ -196,5 +248,6 @@ module.exports = {
   viewAllFaculty,
   blockUser,
   deleteUser,
-  viewIssueByPrority
+  viewIssueByPrority,
+  systemStatistics
 }
