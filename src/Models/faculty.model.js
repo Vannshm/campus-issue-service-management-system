@@ -7,11 +7,6 @@ const facultySchema = new mongoose.Schema({
     required:true,
     unique:true
   },
-  empId:{
-    type:String,
-    required:true,
-    unique:true
-  },
   department:{
     type:String,
     required:true,

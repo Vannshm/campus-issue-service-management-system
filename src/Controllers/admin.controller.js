@@ -1,28 +1,28 @@
 const facultyModel = require('../Models/faculty.model')
 
-async function facultyProfile(req,res){
+async function adminProfile(req,res){
   const {department,designation} = req.body
 
-  const facultyExist = await facultyModel.findOne({userId : req.user.id})
+  const adminExist = await facultyModel.findOne({userId : req.user.id})
 
-  if(facultyExist){
+  if(adminExist){
     return res.status(409).json({
       message:"faculty already exists"
     })
   }
 
-  const faculty = await facultyModel.create({
+  const admin = await facultyModel.create({
     userId:req.user.id,
     department,
     designation
   })
 
-  res.status(201).json({
+  res.status(200).json({
     message:'Faculty profile created sucessfully',
-    facultyId:faculty._id,
-    faculty
+    adminId:admin._id,
+    admin
   })
 
 }
 
-module.exports = {facultyProfile}
+module.exports = {adminProfile}
