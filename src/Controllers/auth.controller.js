@@ -204,11 +204,16 @@ async function viewOneIssue(req,res){
 
 async function updateIssue(req,res){
 
-  if(req.user.role !== 'faculty' && req.user.role !== 'admin'){
-    return res.status(401).json({
-      message:'you cant update the status'
-    })
+  const { title,description, priority, about } = req.body
+  const file = req.file
+
+  const updatedata = {title,description, priority, about}
+
+  if(file){
+    const result = await uploadFile(file.buffer.toString('base64'))
+    updatedata.url = result.url
   }
+
 
   const updatedIssue = await issueModel.findOneAndUpdate(
     {
@@ -216,7 +221,7 @@ async function updateIssue(req,res){
       user:req.user.id
     },
   {
-    $set:req.body
+    $set:updatedata
   },
 {returnDocument:'after'})
 
@@ -298,7 +303,10 @@ try{
     })
   }
 
-  const issue = await issueModel.findByIdAndUpdate(issueId,
+  const issue = await issueModel.findOneAndUpdate({
+    _id:issueId,
+    assignedTo : req.user.id
+  },
     {status:status},
     {returnDocument:'after'}
   )
