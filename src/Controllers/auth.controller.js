@@ -297,8 +297,8 @@ try{
   const issueId = req.params.id
   const {status} = req.body
 
-  if(req.user.role !=='faculty' && req.user.role !=='admin'){
-    return res.status(401).json({
+  if(req.user.role !=='faculty' && req.user.role !=='admin' && req.user.role !=='superadmin'){
+    return res.status(403).json({
       message:'you cant update the status'
     })
   }
